@@ -1,83 +1,69 @@
-<!-- Rename the heading when using this template -->
-# cloud-platform-terraform-_template_
+# cloud-platform-terraform-tigera-calico
 
-<!-- Remove this note -->
-_Note: See the [source of this file](https://github.com/ministryofjustice/cloud-platform-terraform-template/blob/main/README.md?plain=1) for inline comments to help you complete this file._
+[![Releases](https://img.shields.io/github/release/ministryofjustice/cloud-platform-terraform-eks-add-ons/all.svg?style=flat-square)](https://github.com/ministryofjustice/cloud-platform-terraform-eks-add-ons/releases)
 
-<!-- Change the URL in the release badge to point towards your new repository -->
-[![Releases](https://img.shields.io/github/release/ministryofjustice/cloud-platform-terraform-template/all.svg?style=flat-square)](https://github.com/ministryofjustice/cloud-platform-terraform-template/releases)
-
-<!-- Add a short description of the module -->
-This Terraform module will...
-
+Terraform module that deploys calico using tigera operator
 ## Usage
 
-<!-- Describe how to use the module -->
+# For EKS clusters
+```
+module "aws_eks_addons" {
+  source = "github.com/ministryofjustice/cloud-platform-terraform-eks-add-ons=0.1.0"
 
-<!-- Change the source URL below to point towards your new repository -->
-```hcl
-module "template" {
-  source = "github.com/ministryofjustice/cloud-platfrom-terraform-template?ref=version"
 }
 ```
 
-See the [examples/](examples/) folder for more information.
 
-<!-- BEGIN_TF_DOCS -->
+<!--- BEGIN_TF_DOCS --->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >=4.0.0 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >=2.0.0 |
+| terraform | >= 0.14 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >=4.0.0 |
+| aws | n/a |
+| null | n/a |
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| irsa_vpc_cni | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | 4.6.0 |
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
+| Name |
+|------|
+| [aws_eks_addon](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_addon) |
+| [aws_iam_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) |
+| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) |
+| [null_resource](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) |
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| addon\_coredns\_version | Version for addon\_coredns\_version | `string` | `"v1.8.4-eksbuild.1"` | no |
+| addon\_create\_coredns | Create coredns addon | `bool` | `true` | no |
+| addon\_create\_kube\_proxy | Create kube\_proxy addon | `bool` | `true` | no |
+| addon\_create\_vpc\_cni | Create vpc\_cni addon | `bool` | `true` | no |
+| addon\_kube\_proxy\_version | Version for addon\_kube\_proxy\_version | `string` | `"v1.21.2-eksbuild.2"` | no |
+| addon\_tags | Cluster addon tags | `map(string)` | `{}` | no |
+| addon\_vpc\_cni\_version | Version for addon\_create\_vpc\_cni | `string` | `"v1.9.3-eksbuild.1"` | no |
+| cluster\_name | Kubernetes cluster name - used to name (id) the auth0 resources | `any` | n/a | yes |
+| cluster\_oidc\_issuer\_url | Used to create the IAM OIDC role | `string` | `""` | no |
+| eks\_cluster\_id | trigger for null resource using eks\_cluster\_id | `any` | n/a | yes |
 
 ## Outputs
 
-No outputs.
-<!-- END_TF_DOCS -->
+No output.
 
-<!-- Uncomment the below if this module uses tags -->
-
-<!--
-## Tags
-
-Some of the inputs for this module are tags. All infrastructure resources must be tagged to meet the MOJ Technical Guidance on [Documenting owners of infrastructure](https://technical-guidance.service.justice.gov.uk/documentation/standards/documenting-infrastructure-owners.html).
-
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| application |  | string | - | yes |
-| business-unit | Area of the MOJ responsible for the service | string | `mojdigital` | yes |
-| environment-name |  | string | - | yes |
-| infrastructure-support | The team responsible for managing the infrastructure. Should be of the form team-email | string | - | yes |
-| is-production |  | string | `false` | yes |
-| team_name |  | string | - | yes |
-| namespace |  | string | - | yes |
--->
+<!--- END_TF_DOCS --->
 
 ## Reading Material
 
-<!-- Add links to external sources, e.g. Kubernetes or AWS documentation -->
-
-- [Cloud Platform user guide](https://user-guide.cloud-platform.service.justice.gov.uk/#cloud-platform-user-guide)
+https://github.com/tigera/operator
