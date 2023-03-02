@@ -13,7 +13,6 @@ module "aws_eks_addons" {
 }
 ```
 
-
 <!--- BEGIN_TF_DOCS --->
 ## Requirements
 
