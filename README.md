@@ -7,12 +7,11 @@ Terraform module that deploys calico using tigera operator
 
 # For EKS clusters
 ```
-module "aws_eks_addons" {
+module "tigera-calico" {
   source = "github.com/ministryofjustice/cloud-platform-terraform-tigera-calico=0.1.0"
 
 }
 ```
-
 
 <!--- BEGIN_TF_DOCS --->
 ## Requirements
@@ -67,3 +66,45 @@ No output.
 ## Reading Material
 
 https://github.com/tigera/operator
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >=4.0.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >=2.0.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
+| <a name="provider_kubectl"></a> [kubectl](#provider\_kubectl) | n/a |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >=2.0.0 |
+| <a name="provider_null"></a> [null](#provider\_null) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [helm_release.tigera_calico](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
+| [kubectl_manifest.calico_global_policies](https://registry.terraform.io/providers/hashicorp/kubectl/latest/docs/resources/manifest) | resource |
+| [kubernetes_namespace.calico_apiserver](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) | resource |
+| [kubernetes_namespace.calico_system](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) | resource |
+| [kubernetes_namespace.tigera_operator](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) | resource |
+| [null_resource.remove_installation](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [kubectl_file_documents.calico_global_policies](https://registry.terraform.io/providers/hashicorp/kubectl/latest/docs/data-sources/file_documents) | data source |
+
+## Inputs
+
+No inputs.
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
