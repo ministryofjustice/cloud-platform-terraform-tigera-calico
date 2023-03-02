@@ -7,12 +7,19 @@ data "kubectl_file_documents" "calico_global_policies" {
   content = file("${path.module}/resources/calico-global-policies.yaml")
 }
 
+resource "time_sleep" "tigera_apiserver_creation" {
+  create_duration = "120s"
+
+  triggers = {
+    subnet_arn = helm_release.tigera_calico.status
+  }
+}
+
 resource "kubectl_manifest" "calico_global_policies" {
   count     = length(data.kubectl_file_documents.calico_global_policies.documents)
   yaml_body = element(data.kubectl_file_documents.calico_global_policies.documents, count.index)
 
-
-  depends_on = [helm_release.tigera_calico]
+  depends_on = [timesleep.tigera_apiserver_creation]
 }
 
 resource "kubernetes_namespace" "calico_system" {
