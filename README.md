@@ -1,6 +1,6 @@
 # cloud-platform-terraform-tigera-calico
 
-[![Releases](https://img.shields.io/github/release/ministryofjustice/cloud-platform-terraform-eks-add-ons/all.svg?style=flat-square)](https://github.com/ministryofjustice/cloud-platform-terraform-eks-add-ons/releases)
+[![Releases](https://img.shields.io/github/release/ministryofjustice/cloud-platform-terraform-tigera-calico/all.svg?style=flat-square)](https://github.com/ministryofjustice/cloud-platform-terraform-tigera-calico/releases)
 
 Terraform module that deploys calico using tigera operator
 ## Usage
@@ -8,7 +8,7 @@ Terraform module that deploys calico using tigera operator
 # For EKS clusters
 ```
 module "aws_eks_addons" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-eks-add-ons=0.1.0"
+  source = "github.com/ministryofjustice/cloud-platform-terraform-tigera-calico=0.1.0"
 
 }
 ```
