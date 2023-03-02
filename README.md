@@ -7,7 +7,7 @@ Terraform module that deploys calico using tigera operator
 
 # For EKS clusters
 ```
-module "aws_eks_addons" {
+module "tigera-calico" {
   source = "github.com/ministryofjustice/cloud-platform-terraform-tigera-calico=0.1.0"
 
 }
