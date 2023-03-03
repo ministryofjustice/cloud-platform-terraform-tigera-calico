@@ -118,7 +118,6 @@ resource "null_resource" "remove_installation" {
     when    = destroy
     command = <<-EOT
       kubectl patch -n calico-system installations.operator.tigera.io/default --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
-      kubectl patch -n tigera-operator serviceaccount --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
       kubectl delete installations.operator.tigera.io default
     EOT
     on_failure = continue
