@@ -119,6 +119,7 @@ resource "null_resource" "remove_installation" {
     command = <<-EOT
       kubectl delete installations.operator.tigera.io default
     EOT
+    on_failure = continue
   }
 
   triggers = {
