@@ -1,18 +1,43 @@
 
 ##########
-# Calico 
+# Calico #
 ##########
 
-data "kubectl_file_documents" "calico_global_policies" {
-  content = file("${path.module}/resources/calico-global-policies.yaml")
-}
-
 resource "kubectl_manifest" "calico_global_policies" {
-  count     = length(data.kubectl_file_documents.calico_global_policies.documents)
-  yaml_body = element(data.kubectl_file_documents.calico_global_policies.documents, count.index)
+  yaml_body = <<YAML
+apiVersion: crd.projectcalico.org/v1
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-aws-imds
+spec:
+  selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
+  types:
+    - Egress
+  egress:
+    - action: Log
+      metadata: {}
+      protocol: TCP
+      destination:
+        ports:
+          - 80
+          - 443
+        nets:
+          - 169.254.169.254/32
+    - action: Deny
+      metadata: {}
+      protocol: TCP
+      destination:
+        ports:
+          - 80
+          - 443
+        nets:
+          - 169.254.169.254/32
+    - action: Allow
+      destination:
+        nets:
+        - 0.0.0.0/0
+YAML
 
-
-  depends_on = [helm_release.tigera_calico]
 }
 
 resource "kubernetes_namespace" "calico_system" {
@@ -111,9 +136,10 @@ resource "helm_release" "tigera_calico" {
   version    = "3.25.0"
   skip_crds = true
 
-  values = [templatefile("${path.module}/templates/values.yaml.tpl", {
-    kubernetes_provider = "EKS"
-  })]
+ set {
+    name  = "installation.kubernetesProvider"
+    value = "EKS"
+  }
 
   depends_on = [
     kubernetes_namespace.tigera_operator,
