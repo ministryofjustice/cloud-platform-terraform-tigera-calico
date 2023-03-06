@@ -41,7 +41,6 @@ YAML
   depends_on = [
     helm_release.tigera_calico
   ]
-
 }
 
 resource "kubernetes_namespace" "calico_system" {
@@ -114,25 +113,25 @@ resource "kubernetes_namespace" "tigera_operator" {
 }
 
 # Calico Helm release cannot be deleted because of finalizers and installation issues, this can be removed once the below issue is fixed.
+# removes metadata -> finalizers -> tigera.io/operator-cleanup
 # https://github.com/projectcalico/calico/issues/6629
 resource "null_resource" "remove_installation" {
   depends_on = [helm_release.tigera_calico]
 
   provisioner "local-exec" {
-    when    = destroy
     command = <<-EOT
+      set -x
       # kubectl delete crd installations.operator.tigera.io
       kubectl patch installations.operator.tigera.io/default --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
-      echo "finalizers removed from installation"
-      # kubectl delete installations.operator.tigera.io default
+      kubectl delete installations.operator.tigera.io default
       # kubectl patch -n tigera-operator serviceaccount --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
-      # kubectl patch -n calico-system serviceaccount --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
+      kubectl patch -n calico-system serviceaccount --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
     EOT
     on_failure = continue
   }
 
   triggers = {
-    helm_tigera = helm_release.tigera_calico.status
+    helm_tigera = helm_release.tigera_calico.status == "uninstalling"
   }
 }
 
