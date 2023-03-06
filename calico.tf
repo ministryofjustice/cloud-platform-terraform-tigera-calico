@@ -38,6 +38,10 @@ spec:
         - 0.0.0.0/0
 YAML
 
+  depends_on = [
+    helm_release.tigera_calico
+  ]
+
 }
 
 resource "kubernetes_namespace" "calico_system" {
@@ -117,8 +121,11 @@ resource "null_resource" "remove_installation" {
   provisioner "local-exec" {
     when    = destroy
     command = <<-EOT
+      kubectl patch installations.operator.tigera.io/default --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
       kubectl delete installations.operator.tigera.io default
+      kubectl patch -n calico-system serviceaccount --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
     EOT
+    on_failure = continue
   }
 
   triggers = {
