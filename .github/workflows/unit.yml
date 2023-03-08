@@ -4,7 +4,7 @@ on:
 
 jobs:
   go-tests:
-    name: Run Tests
+    name: Run Terratest Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -13,11 +13,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 0.14.x
+          terraform_version: 1.2.5
           terraform_wrapper: false
 
-      - name: Run terraform Tests
-        working-directory: examples/
+      - name: Run tf Tests
+        working-directory: example
         run: |
           terraform init
           terraform validate
