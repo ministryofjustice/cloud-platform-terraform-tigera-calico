@@ -119,8 +119,8 @@ resource "null_resource" "remove_installation" {
   depends_on = [helm_release.tigera_calico]
 
   provisioner "local-exec" {
-    when    = destroy
-    command = <<-EOT
+    when       = destroy
+    command    = <<-EOT
       kubectl patch installations.operator.tigera.io/default --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
       kubectl delete installations.operator.tigera.io default
       kubectl patch -n calico-system serviceaccount --type json --patch='[{"op":"remove","path":"/metadata/finalizers"}]'
@@ -141,16 +141,15 @@ resource "helm_release" "tigera_calico" {
   namespace  = "tigera-operator"
   timeout    = 300
   version    = "3.25.0"
-  skip_crds = true
+  skip_crds  = true
 
- set {
-    name  = "installation.kubernetesProvider"
-    value = "EKS"
-  }
+  values = [templatefile("${path.module}/templates/values.yaml.tpl", {
+    kubernetes_provider = "EKS"
+  })]
 
   depends_on = [
     kubernetes_namespace.tigera_operator,
     kubernetes_namespace.calico_system,
     kubernetes_namespace.calico_apiserver
-    ]
+  ]
 }
