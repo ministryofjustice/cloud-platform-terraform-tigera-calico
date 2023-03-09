@@ -145,6 +145,9 @@ resource "helm_release" "tigera_calico" {
 
   values = [templatefile("${path.module}/templates/values.yaml.tpl", {
     kubernetes_provider = "EKS"
+    # This is the tigera operator version
+    # https://github.com/tigera/operator/releases
+    tigera_operator_version = "v1.29.1"
   })]
 
   depends_on = [
