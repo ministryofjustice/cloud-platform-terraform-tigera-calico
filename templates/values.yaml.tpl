@@ -3,6 +3,13 @@ imagePullSecrets: {}
 installation:
   enabled: true
   kubernetesProvider: "${kubernetes_provider}"
+spec:
+  nodeSelector: all()
+nodeAddressAutodetectionV4:
+         kubernetes: NodeInternalIP
+
+apiServer:
+     enabled: true
 
 apiServer:
   enabled: true
@@ -23,15 +30,19 @@ resources: {}
 
 # Tolerations for the tigera/operator pod.
 tolerations:
-- effect: NoExecute
-  operator: Exists
-- effect: NoSchedule
-  operator: Exists
-
+  - key: node-role.kubernetes.io/master
+    effect: NoSchedule
+  - key: "monitoring-node"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+  - key: "ingress-node"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule" 
 # NodeSelector for the tigera/operator pod.
 nodeSelector:
   kubernetes.io/os: linux
-
 # Custom annotations for the tigera/operator pod.
 podAnnotations: {}
 
