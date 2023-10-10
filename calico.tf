@@ -49,7 +49,8 @@ resource "kubernetes_namespace" "calico_system" {
     name = "calico-system"
 
     labels = {
-      "component" = "calico"
+      "component"                          = "calico"
+      "pod-security.kubernetes.io/enforce" = "privileged"
     }
 
     annotations = {
@@ -72,7 +73,8 @@ resource "kubernetes_namespace" "calico_apiserver" {
     name = "calico-apiserver"
 
     labels = {
-      "component" = "calico"
+      "component"                          = "calico"
+      "pod-security.kubernetes.io/enforce" = "privileged"
     }
 
     annotations = {
@@ -95,7 +97,8 @@ resource "kubernetes_namespace" "tigera_operator" {
     name = "tigera-operator"
 
     labels = {
-      "component" = "calico"
+      "component"                        = "calico"
+      "pod-security.kubernetes.io/audit" = "privileged"
     }
 
     annotations = {
