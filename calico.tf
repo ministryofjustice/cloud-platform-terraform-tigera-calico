@@ -62,10 +62,6 @@ resource "kubernetes_namespace" "calico_system" {
       "cloud-platform-out-of-hours-alert"                        = "true"
     }
   }
-
-  lifecycle {
-    ignore_changes = [metadata]
-  }
 }
 
 resource "kubernetes_namespace" "calico_apiserver" {
