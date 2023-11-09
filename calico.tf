@@ -62,6 +62,10 @@ resource "kubernetes_namespace" "calico_system" {
       "cloud-platform-out-of-hours-alert"                        = "true"
     }
   }
+
+  lifecycle {
+    ignore_changes = [metadata]
+  }
 }
 
 resource "kubernetes_namespace" "calico_apiserver" {
@@ -105,10 +109,6 @@ resource "kubernetes_namespace" "tigera_operator" {
       "cloud-platform.justice.gov.uk/can-tolerate-master-taints" = "true"
       "cloud-platform-out-of-hours-alert"                        = "true"
     }
-  }
-
-  lifecycle {
-    ignore_changes = [metadata]
   }
 }
 
