@@ -97,8 +97,8 @@ resource "kubernetes_namespace" "tigera_operator" {
     name = "tigera-operator"
 
     labels = {
-      "component"                        = "calico"
-      "pod-security.kubernetes.io/audit" = "privileged"
+      "component"                          = "calico"
+      "pod-security.kubernetes.io/enforce" = "privileged"
     }
 
     annotations = {
