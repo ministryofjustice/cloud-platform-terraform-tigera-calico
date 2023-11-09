@@ -110,6 +110,10 @@ resource "kubernetes_namespace" "tigera_operator" {
       "cloud-platform-out-of-hours-alert"                        = "true"
     }
   }
+
+  lifecycle {
+    ignore_changes = [metadata]
+  }
 }
 
 # Calico Helm release cannot be deleted because of finalizers and installation issues, this can be removed once the below issue is fixed.
