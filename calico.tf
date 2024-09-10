@@ -146,9 +146,10 @@ resource "helm_release" "tigera_calico" {
   version    = "3.28.1"
   skip_crds  = true
 
-  values = [
-    "${file("${path.module}/values.yaml")}"
-  ]
+  set {
+    name  = "installation.kubernetesProvider"
+    value = "EKS"
+  }
 
   depends_on = [
     kubernetes_namespace.tigera_operator,
