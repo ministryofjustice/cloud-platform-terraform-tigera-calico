@@ -143,15 +143,13 @@ resource "helm_release" "tigera_calico" {
   repository = "https://projectcalico.docs.tigera.io/charts"
   namespace  = "tigera-operator"
   timeout    = 300
-  version    = "3.25.0"
+  version    = "3.28.1"
   skip_crds  = true
 
-  values = [templatefile("${path.module}/templates/values.yaml.tpl", {
-    kubernetes_provider = "EKS"
-    # This is the tigera operator version
-    # https://github.com/tigera/operator/releases
-    tigera_operator_version = "v1.29.1"
-  })]
+  set {
+    name  = "installation.kubernetesProvider"
+    value = "EKS"
+  }
 
   depends_on = [
     kubernetes_namespace.tigera_operator,
