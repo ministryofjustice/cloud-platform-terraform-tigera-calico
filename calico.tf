@@ -10,7 +10,6 @@ kind: GlobalNetworkPolicy
 metadata:
   name: deny-aws-imds
 spec:
-  order: 5000
   selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
   types:
     - Egress
@@ -33,10 +32,6 @@ spec:
           - 443
         nets:
           - 169.254.169.254/32
-    - action: Allow
-      destination:
-        nets:
-        - 0.0.0.0/0
 YAML
 
   depends_on = [
