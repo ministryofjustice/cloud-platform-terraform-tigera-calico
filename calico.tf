@@ -41,46 +41,46 @@ YAML
 
 }
 
-resource "kubectl_manifest" "gnp_tier" {
-  yaml_body = <<YAML
-apiVersion: crd.projectcalico.org/v1
-kind: Tier
-metadata:
-  name: egress-allow
-spec:
-  order: 10000
-YAML
+# resource "kubectl_manifest" "gnp_tier" {
+#   yaml_body = <<YAML
+# apiVersion: crd.projectcalico.org/v1
+# kind: Tier
+# metadata:
+#   name: egress-allow
+# spec:
+#   order: 10000
+# YAML
 
-  depends_on = [
-    helm_release.tigera_calico
-  ]
+#   depends_on = [
+#     helm_release.tigera_calico
+#   ]
 
-}
+# }
 
-resource "kubectl_manifest" "allow_egress" {
-  yaml_body = <<YAML
-apiVersion: projectcalico.org/v3
-kind: GlobalNetworkPolicy
-metadata:
-  name: allow-egress
-spec:
-  tier: egress-allow
-  order: 10000
-  types:
-    - Egress
-  egress:
-    - action: Allow
-      destination:
-        nets:
-        - 0.0.0.0/0
-YAML
+# resource "kubectl_manifest" "allow_egress" {
+#   yaml_body = <<YAML
+# apiVersion: projectcalico.org/v3
+# kind: GlobalNetworkPolicy
+# metadata:
+#   name: allow-egress
+# spec:
+#   tier: egress-allow
+#   order: 10000
+#   types:
+#     - Egress
+#   egress:
+#     - action: Allow
+#       destination:
+#         nets:
+#         - 0.0.0.0/0
+# YAML
 
-  depends_on = [
-    helm_release.tigera_calico,
-    kubectl_manifest.gnp_tier
-  ]
+#   depends_on = [
+#     helm_release.tigera_calico,
+#     kubectl_manifest.gnp_tier
+#   ]
 
-}
+# }
 
 resource "kubernetes_namespace" "calico_system" {
   metadata {
