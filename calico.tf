@@ -48,7 +48,7 @@ YAML
 
 resource "kubectl_manifest" "gnp_tier" {
   yaml_body = <<YAML
-apiVersion: projectcalico.org/v3
+apiVersion: crd.projectcalico.org/v1
 kind: Tier
 metadata:
   name: gnp
