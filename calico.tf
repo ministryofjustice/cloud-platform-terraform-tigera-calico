@@ -160,7 +160,7 @@ resource "helm_release" "tigera_calico" {
   repository = "https://projectcalico.docs.tigera.io/charts"
   namespace  = "tigera-operator"
   timeout    = 300
-  version    = "3.29.4"
+  version    = "3.30.2"
   skip_crds  = true
 
   set {
