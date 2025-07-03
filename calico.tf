@@ -33,10 +33,6 @@ spec:
           - 443
         nets:
           - 169.254.169.254/32
-    - action: Allow
-      destination:
-        nets:
-        - 0.0.0.0/0
 YAML
 
   depends_on = [
