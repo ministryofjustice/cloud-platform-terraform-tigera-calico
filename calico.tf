@@ -46,7 +46,7 @@ resource "kubectl_manifest" "gnp_tier" {
 apiVersion: crd.projectcalico.org/v1
 kind: Tier
 metadata:
-  name: egress-allow
+  name: egressallow
 spec:
   order: 10000
 YAML
@@ -64,7 +64,7 @@ kind: GlobalNetworkPolicy
 metadata:
   name: alw-egs
 spec:
-  tier: egress-allow
+  tier: egressallow
   order: 10000
   types:
     - Egress
