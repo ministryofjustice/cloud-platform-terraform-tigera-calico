@@ -5,11 +5,20 @@
 
 resource "kubectl_manifest" "calico_global_policies" {
   yaml_body = <<YAML
+apiVersion: projectcalico.org/v3
+kind: Tier
+metadata:
+  name: gnp
+spec:
+  order: 100
+---
 apiVersion: crd.projectcalico.org/v1
 kind: GlobalNetworkPolicy
 metadata:
   name: deny-aws-imds
 spec:
+  tier: gnp
+  order: 100
   selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
   types:
     - Egress
