@@ -45,7 +45,7 @@ resource "kubectl_manifest" "gnp_tier" {
   yaml_body = <<YAML
 apiVersion: crd.projectcalico.org/v1
 kind: Tier
-metadatav:
+metadata:
   name: egress-allow
 spec:
   order: 10000
