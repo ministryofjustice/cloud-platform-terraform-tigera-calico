@@ -57,7 +57,7 @@ YAML
 
 }
 
-resource "kubectl_manifest" "calico_global_policies" {
+resource "kubectl_manifest" "allow_egress" {
   yaml_body = <<YAML
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -76,7 +76,8 @@ spec:
 YAML
 
   depends_on = [
-    helm_release.tigera_calico
+    helm_release.tigera_calico,
+    kubectl_manifest.gnp_tier
   ]
 
 }
