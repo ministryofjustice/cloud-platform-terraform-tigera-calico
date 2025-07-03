@@ -41,21 +41,21 @@ YAML
 
 }
 
-# resource "kubectl_manifest" "gnp_tier" {
-#   yaml_body = <<YAML
-# apiVersion: crd.projectcalico.org/v1
-# kind: Tier
-# metadata:
-#   name: gnp
-# spec:
-#   order: 100
-# YAML
+resource "kubectl_manifest" "gnp_tier" {
+  yaml_body = <<YAML
+apiVersion: crd.projectcalico.org/v1
+kind: Tier
+metadata:
+  name: egress-allow
+spec:
+  order: 100
+YAML
 
-#   depends_on = [
-#     helm_release.tigera_calico
-#   ]
+  depends_on = [
+    helm_release.tigera_calico
+  ]
 
-# }
+}
 
 resource "kubernetes_namespace" "calico_system" {
   metadata {
