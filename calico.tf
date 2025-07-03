@@ -62,9 +62,9 @@ resource "kubectl_manifest" "allow_egress" {
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: alw-egs
+  name: allow-egress
 spec:
-  tier: egressallow
+  # tier: egressallow
   order: 10000
   types:
     - Egress
