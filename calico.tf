@@ -5,13 +5,6 @@
 
 resource "kubectl_manifest" "calico_global_policies" {
   yaml_body = <<YAML
-apiVersion: projectcalico.org/v3
-kind: Tier
-metadata:
-  name: gnp
-spec:
-  order: 100
----
 apiVersion: crd.projectcalico.org/v1
 kind: GlobalNetworkPolicy
 metadata:
@@ -45,6 +38,22 @@ spec:
       destination:
         nets:
         - 0.0.0.0/0
+YAML
+
+  depends_on = [
+    helm_release.tigera_calico
+  ]
+
+}
+
+resource "kubectl_manifest" "gnp_tier" {
+  yaml_body = <<YAML
+apiVersion: projectcalico.org/v3
+kind: Tier
+metadata:
+  name: gnp
+spec:
+  order: 100
 YAML
 
   depends_on = [
