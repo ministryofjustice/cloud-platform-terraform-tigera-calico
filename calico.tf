@@ -64,7 +64,7 @@ kind: GlobalNetworkPolicy
 metadata:
   name: allow-egress
 spec:
-  # tier: egressallow
+  tier: egressallow
   order: 10000
   types:
     - Egress
@@ -160,7 +160,7 @@ resource "helm_release" "tigera_calico" {
   repository = "https://projectcalico.docs.tigera.io/charts"
   namespace  = "tigera-operator"
   timeout    = 300
-  version    = "3.30.2"
+  version    = "3.29.1"
   skip_crds  = true
 
   set {
