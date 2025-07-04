@@ -64,7 +64,7 @@ kind: GlobalNetworkPolicy
 metadata:
   name: allow-egress
 spec:
-  tier: egressallow
+  # tier: egressallow
   order: 10000
   types:
     - Egress
