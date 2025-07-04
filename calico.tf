@@ -51,6 +51,7 @@ kind: GlobalNetworkPolicy
 metadata:
   name: deny-egress-namespaces
 spec:
+  order: 100
   selector: projectcalico.org/namespace == 'starter-pack-0'
   types:
     - Egress
