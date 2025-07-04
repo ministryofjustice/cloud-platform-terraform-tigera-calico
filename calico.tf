@@ -44,7 +44,7 @@ YAML
 
 }
 
-resource "kubectl_manifest" "calico_global_policies" {
+resource "kubectl_manifest" "block_egress_namespace" {
   yaml_body = <<YAML
 apiVersion: crd.projectcalico.org/v1
 kind: GlobalNetworkPolicy
