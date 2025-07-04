@@ -44,6 +44,29 @@ YAML
 
 }
 
+resource "kubectl_manifest" "calico_global_policies" {
+  yaml_body = <<YAML
+apiVersion: crd.projectcalico.org/v1
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-egress-namespaces
+spec:
+  selector: projectcalico.org/namespace == 'starter-pack-0'
+  types:
+    - Egress
+  egress:
+    - action: Allow
+      destination:
+        nets:
+        - 0.0.0.0/0
+YAML
+
+  depends_on = [
+    helm_release.tigera_calico
+  ]
+
+}
+
 resource "kubernetes_namespace" "calico_system" {
   metadata {
     name = "calico-system"
