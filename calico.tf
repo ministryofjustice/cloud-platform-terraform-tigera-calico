@@ -32,6 +32,25 @@ spec:
           - 443
         nets:
           - 169.254.169.254/32
+YAML
+
+  depends_on = [
+    helm_release.tigera_calico
+  ]
+
+}
+
+resource "kubectl_manifest" "gnp_allow_egress" {
+  yaml_body = <<YAML
+apiVersion: crd.projectcalico.org/v1
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-aws-imds
+spec:
+  selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
+  types:
+    - Egress
+  egress:
     - action: Allow
       destination:
         nets:
