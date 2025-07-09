@@ -45,7 +45,7 @@ resource "kubectl_manifest" "gnp_allow_egress" {
 apiVersion: crd.projectcalico.org/v1
 kind: GlobalNetworkPolicy
 metadata:
-  name: deny-aws-imds
+  name: allow-egress-gnp
 spec:
   selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
   types:
