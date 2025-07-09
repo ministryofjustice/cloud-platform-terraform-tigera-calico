@@ -47,7 +47,8 @@ kind: GlobalNetworkPolicy
 metadata:
   name: allow-egress-gnp
 spec:
-  selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero", "starter-pack-0" }
+  order: 100000000
+  selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
   types:
     - Egress
   egress:
