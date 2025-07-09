@@ -40,29 +40,29 @@ YAML
 
 }
 
-resource "kubectl_manifest" "gnp_allow_egress" {
-  yaml_body = <<YAML
-apiVersion: crd.projectcalico.org/v1
-kind: GlobalNetworkPolicy
-metadata:
-  name: allow-egress-gnp
-spec:
-  order: 100000000
-  selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
-  types:
-    - Egress
-  egress:
-    - action: Allow
-      destination:
-        nets:
-        - 0.0.0.0/0
-YAML
+# resource "kubectl_manifest" "gnp_allow_egress" {
+#   yaml_body = <<YAML
+# apiVersion: crd.projectcalico.org/v1
+# kind: GlobalNetworkPolicy
+# metadata:
+#   name: allow-egress-gnp
+# spec:
+#   order: 100000000
+#   selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
+#   types:
+#     - Egress
+#   egress:
+#     - action: Allow
+#       destination:
+#         nets:
+#         - 0.0.0.0/0
+# YAML
 
-  depends_on = [
-    helm_release.tigera_calico
-  ]
+#   depends_on = [
+#     helm_release.tigera_calico
+#   ]
 
-}
+# }
 
 resource "kubernetes_namespace" "calico_system" {
   metadata {
