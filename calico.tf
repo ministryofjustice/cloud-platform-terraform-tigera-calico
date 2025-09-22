@@ -124,14 +124,19 @@ resource "helm_release" "tigera_calico" {
   timeout    = 300
   version    = "3.30.3"
   skip_crds  = true
-  values = [
-    file("values.yaml")
-  ]
 
   set = [
     {
       name  = "installation.kubernetesProvider"
       value = "EKS"
+    },
+    {
+      name = "whisker.enabled"
+      value = var.whiskers_enabled
+    },
+    {
+      name = "goldmane.enabled"
+      value = var.goldmane_enabled
     }
   ]
 
