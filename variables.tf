@@ -1,11 +1,11 @@
 variable "goldmane_enabled" {
-  description = "Enable Goldmanet service"
+  description = "Enable Goldmane service"
   type        = bool
   default     = false
 }
 
-variable "whiskers_enabled" {
-  description = "Enable Whiskers service"
+variable "whisker_enabled" {
+  description = "Enable Whisker service"
   type        = bool
   default     = false
 }

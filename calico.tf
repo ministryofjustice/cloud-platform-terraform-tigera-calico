@@ -132,11 +132,15 @@ resource "helm_release" "tigera_calico" {
     },
     {
       name = "whisker.enabled"
-      value = var.whiskers_enabled
+      value = var.whisker_enabled
     },
     {
       name = "goldmane.enabled"
       value = var.goldmane_enabled
+    },
+    {
+      name = "manageCRDs"
+      value = "false"
     }
   ]
 
