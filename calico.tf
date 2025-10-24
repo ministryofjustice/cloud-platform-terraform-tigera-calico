@@ -10,7 +10,7 @@ kind: GlobalNetworkPolicy
 metadata:
   name: deny-aws-imds
 spec:
-  selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero" }
+  selector: projectcalico.org/namespace not in { "cert-manager", "ingress-controllers", "kube-system", "logging", "monitoring", "velero", "smoketest-imds-allow" }
   types:
     - Egress
   egress:
