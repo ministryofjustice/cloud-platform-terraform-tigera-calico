@@ -133,7 +133,15 @@ resource "helm_release" "tigera_calico" {
       value = "EKS"
     },
     {
-      name  = "nodeSelector.network"
+      name  = "installation.nodeSelector.network"
+      value = "calico"
+    },
+    {
+      name  = "installation.calicoNodeDaemonSet.spec.template.spec.nodeSelector.network"
+      value = "calico"
+    },
+    {
+      name  = "installation.csiNodeDriverDaemonSet.spec.template.spec.nodeSelector.network"
       value = "calico"
     }
   ]
