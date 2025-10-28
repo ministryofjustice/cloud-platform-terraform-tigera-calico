@@ -4,6 +4,8 @@
 ##########
 
 resource "kubectl_manifest" "calico_global_policies" {
+  count = var.enable_clusterwide_policies ? 1 : 0
+
   yaml_body = <<YAML
 apiVersion: crd.projectcalico.org/v1
 kind: GlobalNetworkPolicy
@@ -129,6 +131,10 @@ resource "helm_release" "tigera_calico" {
     {
       name  = "installation.kubernetesProvider"
       value = "EKS"
+    },
+    {
+      name  = "nodeSelector.network"
+      value = "calico"
     }
   ]
 
