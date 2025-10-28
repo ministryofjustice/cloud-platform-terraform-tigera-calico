@@ -143,6 +143,18 @@ resource "helm_release" "tigera_calico" {
     {
       name  = "installation.csiNodeDriverDaemonSet.spec.template.spec.nodeSelector.network"
       value = "calico"
+    },
+    {
+      name  = "installation.typhaDeployment.spec.template.spec.nodeSelector.network"
+      value = "calico"
+    },
+    {
+      name  = "installation.calicoKubeControllersDeployment.spec.template.spec.nodeSelector.network"
+      value = "calico"
+    },
+    {
+      name  = "apiServer.spec.apiServerDeployment.spec.template.spec.nodeSelector.network"
+      value = "calico"
     }
   ]
 
