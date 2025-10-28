@@ -153,7 +153,7 @@ resource "helm_release" "tigera_calico" {
       value = "calico"
     },
     {
-      name  = "apiServer.spec.apiServerDeployment.spec.template.spec.nodeSelector.network"
+      name  = "apiServer.apiServerDeployment.spec.template.spec.nodeSelector.network"
       value = "calico"
     }
   ]
