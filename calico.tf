@@ -122,13 +122,21 @@ resource "helm_release" "tigera_calico" {
   repository = "https://projectcalico.docs.tigera.io/charts"
   namespace  = "tigera-operator"
   timeout    = 300
-  version    = "3.29.6"
+  version    = "3.30.7"
   skip_crds  = true
 
   set = [
     {
       name  = "installation.kubernetesProvider"
       value = "EKS"
+    },
+    {
+      name  = "goldmane.enabled"
+      value = false
+    },
+    {
+      name  = "whisker.enabled"
+      value = false
     }
   ]
 
