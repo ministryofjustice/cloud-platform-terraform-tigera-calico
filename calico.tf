@@ -140,7 +140,7 @@ resource "helm_release" "tigera_calico" {
     },
     {
       name  = "manageCRDs"
-      value = true
+      value = false
     }
   ]
 
