@@ -137,6 +137,10 @@ resource "helm_release" "tigera_calico" {
     {
       name  = "whisker.enabled"
       value = false
+    },
+    {
+      name  = "manageCRDs"
+      value = true
     }
   ]
 
